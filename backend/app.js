@@ -9,6 +9,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { errors } = require('celebrate');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
+const cors = require('./middlewares/cors');
 const { handleError } = require('./errors/handleError');
 const NotFoundError = require('./errors/NotFoundError');
 require('dotenv').config();
@@ -28,6 +29,7 @@ app.get('/crash-test', () => {
 });
 
 app.use(requestLogger);
+const cors = require('./middlewares/cors');
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
