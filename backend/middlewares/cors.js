@@ -1,7 +1,7 @@
 const allowedCors = [
   'https://mesto.smauga.nomoredomains.xyz',
   'http://mesto.smauga.nomoredomains.xyz',
-  'localhost:3000'
+  'http://localhost:3000'
 ];
 
 module.exports = (req, res, next) => {
