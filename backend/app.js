@@ -29,7 +29,7 @@ app.get('/crash-test', () => {
 });
 
 app.use(requestLogger);
-const cors = require('./middlewares/cors');
+app.use(cors);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
