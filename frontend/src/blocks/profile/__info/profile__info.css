@@ -1,0 +1,29 @@
+.profile__info {
+  width: calc(100% - 320px);
+  display: grid;
+  grid-template-columns: auto min-content 1fr;
+  grid-template-areas: 
+    "name edit edit"
+    "status status status";
+    align-items: center;
+    row-gap: 16px;
+    column-gap: 18px;
+}
+
+@media screen and (max-width: 991px){
+  .profile__info {
+    text-align: center;
+    width: 100%;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: 
+      ". name edit"
+      "status status status";
+  }
+}
+
+@media screen and (max-width: 575px){
+  .profile__info {
+    row-gap: 7px;
+    column-gap: 10px;
+  }
+}

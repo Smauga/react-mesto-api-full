@@ -1,0 +1,7 @@
+.element__info {
+  width: 87%;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  margin: 0 auto;
+  align-items: center;
+}

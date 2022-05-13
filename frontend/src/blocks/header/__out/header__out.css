@@ -1,0 +1,29 @@
+.header__out {
+  padding: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: right;
+  color: #A9A9A9;
+  text-decoration: none;
+  margin-top: 5px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: opacity .4s;
+} 
+
+.header__out:hover {
+  opacity: 0.85;
+}
+
+@media screen and (max-width: 575px){
+  .header__out {
+    padding: 0 0 40px;
+    margin: 0 0 27px;
+    border-bottom: 1px rgba(84, 84, 84, .7) solid;
+    width: 100%;
+    text-align: center;
+  }
+}

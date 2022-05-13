@@ -1,0 +1,5 @@
+@media screen and (max-width: 575px){
+  .header__container_active {
+    display: flex;
+  }
+}

@@ -1,0 +1,10 @@
+.element__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 79px);
+  object-fit: cover;
+  cursor: pointer;
+  filter: brightness(75%);
+}

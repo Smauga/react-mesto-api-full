@@ -1,0 +1,16 @@
+.sign__link {
+  margin: 216px 0 15px;
+  width: 100%;
+  height: 50px;
+  transition: opacity .4s;
+}
+
+.sign__link:hover {
+  opacity: 0.85;
+}
+
+@media screen and (max-width: 575px){
+  .sign__link {
+    margin-top: 173px;
+  }
+}
