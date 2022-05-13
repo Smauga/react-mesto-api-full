@@ -1,10 +1,10 @@
 const serverAddress = 'https://api.mesto.smauga.nomoredomains.xyz';
-// const userToken = '96c866eb-92a9-4140-92ff-b1afa5e1671b';
+const userToken = '96c866eb-92a9-4140-92ff-b1afa5e1671b';
 
 class Api {
   constructor({ address, token }) {
     this._address = address;
-    // this._token = token;
+    this._token = token;
   }
 
   _handleResponse(res) {
@@ -15,7 +15,9 @@ class Api {
   // Получить карточки
   getCards() {
     return fetch(`${this._address}/cards`, {
-      credentials: 'include',
+      headers: {
+        authorization: this._token
+      }
     })
       .then(res => this._handleResponse(res));
   }
@@ -25,9 +27,9 @@ class Api {
     return fetch(`${this._address}/cards`, {
       method: 'POST',
       headers: {
+        authorization: this._token,
         'Content-type': 'application/json'
       },
-      credentials: 'include',
       body: JSON.stringify({
         name: name,
         link: link
@@ -41,9 +43,9 @@ class Api {
     return fetch(`${this._address}/users/me/avatar `, {
       method: 'PATCH',
       headers: {
+        authorization: this._token,
         'Content-Type': 'application/json'
       },
-      credentials: 'include',
       body: JSON.stringify({
         avatar: avatar
       })
@@ -54,7 +56,9 @@ class Api {
   // Получить информацию о юзере
   getUserData() {
     return fetch(`${this._address}/users/me`, {
-      credentials: 'include',
+      headers: {
+        authorization: this._token
+      }
     })
       .then(res => this._handleResponse(res));
   }
@@ -64,9 +68,9 @@ class Api {
     return fetch(`${this._address}/users/me`, {
       method: 'PATCH',
       headers: {
+        authorization: this._token,
         'Content-Type': 'application/json'
       },
-      credentials: 'include',
       body: JSON.stringify({
         name: name,
         about: about
@@ -79,7 +83,9 @@ class Api {
   deleteCard({ _id }) {
     return fetch(`${this._address}/cards/${_id}`, {
       method: 'DELETE',
-      credentials: 'include',
+      headers: {
+        authorization: this._token
+      }
     })
       .then(res => this._handleResponse(res));
   }
@@ -89,14 +95,18 @@ class Api {
     if (noLike) {
       return fetch(`${this._address}/cards/${id}/likes`, {
         method: 'PUT',
-        credentials: 'include',
+        headers: {
+          authorization: this._token
+        }
       })
         .then(res => this._handleResponse(res));
     }
     else {
       return fetch(`${this._address}/cards/${id}/likes`, {
         method: 'DELETE',
-        credentials: 'include',
+        headers: {
+          authorization: this._token
+        }
       })
         .then(res => this._handleResponse(res));
     }
@@ -104,4 +114,4 @@ class Api {
   }
 }
 
-export default new Api({ address: serverAddress });
+export default new Api({ address: serverAddress, token: userToken });
