@@ -1,10 +1,8 @@
 const serverAddress = 'https://api.mesto.smauga.nomoredomains.xyz';
-const userToken = '96c866eb-92a9-4140-92ff-b1afa5e1671b';
 
 class Api {
-  constructor({ address, token }) {
+  constructor({ address }) {
     this._address = address;
-    this._token = token;
   }
 
   _handleResponse(res) {
@@ -13,21 +11,21 @@ class Api {
   }
 
   // Получить карточки
-  getCards() {
+  getCards(token) {
     return fetch(`${this._address}/cards`, {
       headers: {
-        authorization: this._token
+        authorization: `Bearer ${token}`
       }
     })
       .then(res => this._handleResponse(res));
   }
 
   // Добавить карточку
-  addCard({ name, link }) {
+  addCard({ name, link }, token) {
     return fetch(`${this._address}/cards`, {
       method: 'POST',
       headers: {
-        authorization: this._token,
+        authorization: `Bearer ${token}`,
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
@@ -39,11 +37,11 @@ class Api {
   }
 
   // Изменить аватар
-  setUserAvatar({ avatar }) {
+  setUserAvatar({ avatar }, token) {
     return fetch(`${this._address}/users/me/avatar `, {
       method: 'PATCH',
       headers: {
-        authorization: this._token,
+        authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -54,21 +52,21 @@ class Api {
   }
 
   // Получить информацию о юзере
-  getUserData() {
+  getUserData(token) {
     return fetch(`${this._address}/users/me`, {
       headers: {
-        authorization: this._token
+        authorization: `Bearer ${token}`
       }
     })
       .then(res => this._handleResponse(res));
   }
 
   // Изменить информацию о юзере
-  setUserData({ name, about }) {
+  setUserData({ name, about }, token) {
     return fetch(`${this._address}/users/me`, {
       method: 'PATCH',
       headers: {
-        authorization: this._token,
+        authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -80,23 +78,23 @@ class Api {
   }
 
   // Удалить карточку
-  deleteCard({ _id }) {
+  deleteCard({ _id }, token) {
     return fetch(`${this._address}/cards/${_id}`, {
       method: 'DELETE',
       headers: {
-        authorization: this._token
+        authorization: `Bearer ${token}`
       }
     })
       .then(res => this._handleResponse(res));
   }
 
   // Изменение лайка
-  changeLikeCardStatus(id, noLike) {
+  changeLikeCardStatus(id, noLike, token) {
     if (noLike) {
       return fetch(`${this._address}/cards/${id}/likes`, {
         method: 'PUT',
         headers: {
-          authorization: this._token
+          authorization: `Bearer ${token}`
         }
       })
         .then(res => this._handleResponse(res));
@@ -105,7 +103,7 @@ class Api {
       return fetch(`${this._address}/cards/${id}/likes`, {
         method: 'DELETE',
         headers: {
-          authorization: this._token
+          authorization: `Bearer ${token}`
         }
       })
         .then(res => this._handleResponse(res));
@@ -114,4 +112,4 @@ class Api {
   }
 }
 
-export default new Api({ address: serverAddress, token: userToken });
+export default new Api({ address: serverAddress });

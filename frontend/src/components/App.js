@@ -37,12 +37,12 @@ function App() {
   useEffect(() => {
     handleTokenCheck();
     if (loggedIn) {
-      api.getUserData()
+      api.getUserData(localStorage.getItem('jwt'))
         .then(data => {
           setCurrentUser(data);
         })
         .catch(error => console.log(error));
-      api.getCards()
+      api.getCards(localStorage.getItem('jwt'))
         .then(cards => {
           setCards(cards);
         })
@@ -95,7 +95,8 @@ function App() {
       const jwt = localStorage.getItem('jwt');
       auth.checkToken(jwt)
         .then((res) => {
-          setEmail(res.data.email);
+          setCurrentUser(res);  
+          setEmail(res.email);
           setLoggedIn(true);
         })
         .then(() => history.push('/'))
@@ -127,8 +128,9 @@ function App() {
 
   // Отправка данных о юзере
   function handleUpdateUser(user) {
-    api.setUserData(user)
+    api.setUserData(user, localStorage.getItem('jwt'))
       .then(data => {
+        console.log(data);
         setCurrentUser(data);
       })
       .catch(error => console.log(error))
@@ -137,7 +139,7 @@ function App() {
 
   // Отправка данных о аватаре
   function handleUpdateAvatar(user) {
-    api.setUserAvatar(user)
+    api.setUserAvatar(user, localStorage.getItem('jwt'))
       .then(data => {
         setCurrentUser(data);
       })
@@ -148,9 +150,9 @@ function App() {
   // Изменение лайка
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card._id, !isLiked, localStorage.getItem('jwt'))
       .then((newCard) => {
         setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
       })
@@ -160,7 +162,7 @@ function App() {
   // Удаление карточки
   function handleCardDelete(card) {
     const deleteCardID = card._id;
-    api.deleteCard(card)
+    api.deleteCard(card, localStorage.getItem('jwt'))
       .then(() => {
         setCards((cards) => cards.filter((card) => card._id !== deleteCardID));
       })
@@ -169,7 +171,7 @@ function App() {
 
   // Добавление карточки
   function handleAddPlaceSubmit({ name, link }) {
-    api.addCard({ name, link })
+    api.addCard({ name, link }, localStorage.getItem('jwt'))
       .then(newCard => {
         setCards([newCard, ...cards]);
       })

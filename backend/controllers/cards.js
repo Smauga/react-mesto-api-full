@@ -5,7 +5,7 @@ const DataError = require('../errors/DataError');
 
 const getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.send(cards))
+    .then((cards) => res.send(cards.reverse()))
     .catch(next);
 };
 
