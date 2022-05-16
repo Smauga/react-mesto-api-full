@@ -14,8 +14,8 @@ const getUsers = (req, res, next) => {
 
 const getUser = (req, res, next) => {
   User.findById(req.params.userId)
+    .orFail(() => new NotFoundError('Пользователь не существует'))
     .then((user) => {
-      if (!user) throw new NotFoundError('Пользователь не существует');
       res.send(user);
     })
     .catch((err) => {
@@ -77,8 +77,8 @@ const updateUserInfo = (req, res, next) => {
     new: true,
     runValidators: true,
   })
+    .orFail(() => new NotFoundError('Пользователь не существует'))
     .then((user) => {
-      if (!user) throw new NotFoundError('Пользователь не найден');
       res.send(user);
     })
     .catch((err) => {
@@ -94,8 +94,8 @@ const updateUserAvatar = (req, res, next) => {
     new: true,
     runValidators: true,
   })
+    .orFail(() => new NotFoundError('Пользователь не существует'))
     .then((user) => {
-      if (!user) throw new NotFoundError('Пользователь не найден');
       res.send(user);
     })
     .catch((err) => {
