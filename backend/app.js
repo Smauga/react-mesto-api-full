@@ -5,12 +5,13 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { celebrate, Joi } = require('celebrate');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { errors } = require('celebrate');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const cors = require('./middlewares/cors');
 const { handleError } = require('./errors/handleError');
+const { validateURL } = require('./validators/validateURL');
 const NotFoundError = require('./errors/NotFoundError');
 require('dotenv').config();
 
@@ -41,7 +42,7 @@ app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(/https?:\/\/(www\.)?[\w-._~:/?#[\]@!$&'()*+,;=]+/),
+    avatar: Joi.string().custom(validateURL, 'validation url'),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),

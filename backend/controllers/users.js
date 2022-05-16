@@ -4,6 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const EmailError = require('../errors/EmailError');
 const DataError = require('../errors/DataError');
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUsers = (req, res, next) => {
@@ -14,8 +15,8 @@ const getUsers = (req, res, next) => {
 
 const getUser = (req, res, next) => {
   User.findById(req.params.userId)
+    .orFail(() => new NotFoundError('Пользователь не существует'))
     .then((user) => {
-      if (!user) throw new NotFoundError('Пользователь не существует');
       res.send(user);
     })
     .catch((err) => {
@@ -59,14 +60,14 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
 
-  .then((user) => {
-    const token = jwt.sign(
-      { _id: user._id },
-      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-      { expiresIn: '7d' },
-    );
-    res.send({ token });
-  })
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res.send({ token });
+    })
     .catch(next);
 };
 
@@ -77,8 +78,8 @@ const updateUserInfo = (req, res, next) => {
     new: true,
     runValidators: true,
   })
+    .orFail(() => new NotFoundError('Пользователь не существует'))
     .then((user) => {
-      if (!user) throw new NotFoundError('Пользователь не найден');
       res.send(user);
     })
     .catch((err) => {
@@ -94,8 +95,8 @@ const updateUserAvatar = (req, res, next) => {
     new: true,
     runValidators: true,
   })
+    .orFail(() => new NotFoundError('Пользователь не существует'))
     .then((user) => {
-      if (!user) throw new NotFoundError('Пользователь не найден');
       res.send(user);
     })
     .catch((err) => {
