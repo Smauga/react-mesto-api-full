@@ -14,7 +14,7 @@ _________________________________________
 * MongoDB
 _________________________________________
 ## Ссылка на ресурс
-[Ссылка на ресурс](https://mesto.smauga.nomoredomains.xyz)
-[Ссылка на домен сервера](https://api.mesto.smauga.nomoredomains.xyz)
-Публичный IP адрес сервера - 51.250.111.109
+* [Ссылка на ресурс](https://mesto.smauga.nomoredomains.xyz) - https://mesto.smauga.nomoredomains.xyz
+* [Ссылка на домен сервера](https://api.mesto.smauga.nomoredomains.xyz) - https://api.mesto.smauga.nomoredomains.xyz
+* Публичный IP адрес сервера - 51.250.111.109
 _________________________________________
